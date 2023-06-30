@@ -7,4 +7,10 @@ public class Food {
     }
     public String getName(){return name;}
     public double getPrice(){return price;}
+    public void updatePrice(double p){price = p;}
+
+    @Override
+    public String toString(){
+        return name + " : " + price;
+    }
 }
