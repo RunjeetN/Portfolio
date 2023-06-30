@@ -6,83 +6,38 @@ public class Main {
     static Map<String, Food> foods = new HashMap<>();
 
     public static void main(String[] args) {
-        addFriends();
-        addFoods();
 
-        assignFriends();
     }
 
-    public static void addFriends() {
-        // continuously check for new input in a while loop:
-        // if the name isn't already in the list, add it
-        // if it is, ask if it's another friend with the same name or a mistake
-        // if it's a diff person, ask for last initial and append that to their name
-        String firstName = "";
-        String lastInitial = "";
-
-        while (true) {
-            System.out.print("Please enter a friend's first name: ");
-            firstName = scan.next();
-            if (firstName.equalsIgnoreCase("finish")) {
-                System.out.println("all friends added");
-                System.out.println(friends.keySet().toString());
-                return;
-            }
-            System.out.println();
-            if (friends.containsKey(firstName)) {
-                System.out.print("There is already a friend with this name, please enter their last initial to differentiate or type MISTAKE if this was a mistake: ");
-                lastInitial = scan.next();
-                if (!lastInitial.equalsIgnoreCase("mistake")) {
-                    firstName += " " + lastInitial;
-                } else { // I feel dirty doing this
-                    addFriends();
-                    return;
-                }
-            }
-            friends.put(firstName, new Friend(firstName));
+    public void addFriend(String input) {
+        // given a name, add the name and the corresponding Friend object to the map if not already there
+        if (!friends.containsKey(input) && !input.isBlank()){
+            friends.put(input, new Friend(input));
         }
     }
 
-    public static void addFoods() {
-        // continuously check for new input
-        // if entered item (name) is not already in the list, create a food object and add it
-        // else update the food's price with the new price
 
-        String name = "";
-        double cost = 0.0;
-        String result = "";
-        System.out.println("Type finish when you are done inputting foods");
-        while (true) {
-            System.out.print("\nEnter a dish/drink: ");
-            name = scan.next();
-            if (name.equalsIgnoreCase("finish")) {
-                System.out.println("\n" + foods.values().toString());
-                return;
-            }
-            if (foods.containsKey(name)) {
-                System.out.print("\nThis dish is already added. Override the price or type mistake if this was a mistake: ");
-                result = scan.next();
-                if (result.equalsIgnoreCase("mistake")) {
-                    addFoods();
-                    return;
-                }
-                foods.get(name).updatePrice(Double.parseDouble(result));
-            } else {
-                System.out.print("\nEnter the price: ");
-                cost = scan.nextDouble();
-                foods.put(name, new Food(name, cost));
-            }
+    public void addFood(String name, double cost) {
+        // given a name and cost of food, add name to map and associated Food object. If already in map, update price.
+        if(name.isBlank() || cost == 0.0){
+            return;
+        }
+        if(foods.containsKey(name)){
+            foods.get(name).updatePrice(cost);
+        }
+        else{
+            foods.put(name, new Food(name, cost));
         }
     }
 
-    public static void assignFriends() {
+    public void assignFriends() {
         for (Food f : foods.values()) {
             assignFood(f);
         }
         print();
     }
 
-    public static void assignFood(Food f) {
+    public void assignFood(Food f) {
         String person = "";
         List<Friend> people = new ArrayList<>();
         System.out.println("Who had the " + f.getName() + " : \n");
