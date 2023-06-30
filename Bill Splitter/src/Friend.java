@@ -21,7 +21,6 @@ public class Friend {
     public void addFood(Food f){
         if(!eaten.contains(f)){
             eaten.add(f);
-            debt += f.getPrice();
         }
     }
     public void removeFood(Food f){
