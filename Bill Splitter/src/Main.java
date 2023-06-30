@@ -6,16 +6,8 @@ public class Main {
     static Map<String, Food> foods = new HashMap<>();
 
     public static void main(String[] args) {
-        friends.put("Nathan", new Friend("Nathan"));
-        friends.put("Dev", new Friend("Dev"));
-        friends.put("Ridhi", new Friend("Ridhi"));
-        friends.put("Shivani", new Friend("Shivani"));
-        friends.put("Shruti", new Friend("Shruti"));
-
-        foods.put("Chicken_Curry", new Food("Chicken_Curry", 15));
-        foods.put("Naan", new Food("Naan", 6));
-        foods.put("Rice", new Food("Rice", 3));
-        foods.put("Paneer_Saag", new Food("Paneer_Saag", 9));
+        addFriends();
+        addFoods();
 
         assignFriends();
     }
