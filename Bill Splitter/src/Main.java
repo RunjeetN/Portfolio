@@ -1,9 +1,10 @@
 import java.util.*;
 
 public class Main {
-    static Scanner scan = new Scanner(System.in);
-    static Map<String, Friend> friends = new HashMap<>();
-    static Map<String, Food> foods = new HashMap<>();
+    private static Scanner scan = new Scanner(System.in);
+    private static Map<String, Friend> friends = new TreeMap<>();
+    private static Map<String, Food> foods = new TreeMap<>();
+    private static List<String> foodList = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -62,5 +63,26 @@ public class Main {
             Friend f = friends.get(name);
             System.out.println(name + " ate " + f.printFoods() + " and owes $" + f.getDebt());
         }
+    }
+    public String friendsToString(){
+        return friends.toString();
+    }
+    public Object[] getFriends(){
+        return friends.keySet().toArray();
+    }
+    public String foodsToString(){
+        return foods.toString();
+    }
+    public Object[] getFoods(){
+        foodList.clear();
+        for(Food f: foods.values()){
+            if(f.getPrice() % 1 == 0){
+                foodList.add(f.getName() + " : $" + f.getPrice() + "0");
+            }
+            else{
+                foodList.add(f.getName() + " : $" + f.getPrice());
+            }
+        }
+        return foodList.toArray();
     }
 }
