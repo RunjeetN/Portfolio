@@ -70,6 +70,9 @@ public class Main {
     public Object[] getFriends(){
         return friends.keySet().toArray();
     }
+    public Collection<Friend> getFriendObjects(){
+        return friends.values();
+    }
     public String foodsToString(){
         return foods.toString();
     }
