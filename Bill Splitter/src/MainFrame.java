@@ -1,8 +1,10 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ComponentAdapter;
+import java.util.List;
 
 public class MainFrame extends JFrame {
     private JPanel mainPanel;
@@ -18,6 +20,11 @@ public class MainFrame extends JFrame {
     private JTable table;
     private JLabel title;
     private JScrollPane f;
+    private JList people;
+    private JList foods;
+    private JPanel matchingPanel;
+    private JButton toSummaryBtn;
+    private JButton assignBtn;
 
     private Main app = new Main();
 
@@ -61,9 +68,15 @@ public class MainFrame extends JFrame {
         nextBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                startup(secondPanel);
+                startup(matchingPanel);
 
-                String[][] data = new String[app.getFriends().length][3];
+                for(Friend f: app.getFriendObjects()){
+                    people.setListData(app.getFriends());
+                    foods.setListData(app.getFoodKeySet());
+                }
+
+                // SETTING UP TABLE
+                /*String[][] data = new String[app.getFriends().length][3];
                 String[] header = {"Name", "$$$", "Ate:"};
                 int count = 0;
                 for(Friend f: app.getFriendObjects()){
@@ -72,9 +85,59 @@ public class MainFrame extends JFrame {
                     data[count][2] = f.getFoods().toString();
                     count++;
                 }
-                table = new JTable(data, header);
+                table = new JTable(data, header); */
             }
 
+        });
+        assignBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = people.getSelectedValue().toString();
+                Friend person = app.getFriend(name);
+                List<String> fList = foods.getSelectedValuesList();
+                for(String f: fList){
+                    person.addFood(app.getFood(f));
+                }
+            }
+        });
+
+        people.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting() == false) {
+
+                    if (people.getSelectedIndex() == -1) {
+                        //No selection, disable fire button.
+                        assignBtn.setEnabled(false);
+
+                    } else {
+                        //Selection, enable the fire button.
+                        assignBtn.setEnabled(true);
+                    }
+                }
+            }
+        });
+        foods.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting() == false) {
+
+                    if (people.getSelectedIndex() == -1) {
+                        //No selection, disable fire button.
+                        assignBtn.setEnabled(false);
+
+                    } else {
+                        //Selection, enable the fire button.
+                        assignBtn.setEnabled(true);
+                    }
+                }
+            }
+        });
+        toSummaryBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
         });
     }
     public static void main(String[] args){

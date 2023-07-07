@@ -70,6 +70,12 @@ public class Main {
     public Object[] getFriends(){
         return friends.keySet().toArray();
     }
+    public Friend getFriend(String name){
+        return friends.get(name);
+    }
+    public Food getFood(String name){
+        return foods.get(name);
+    }
     public Collection<Friend> getFriendObjects(){
         return friends.values();
     }
@@ -87,5 +93,8 @@ public class Main {
             }
         }
         return foodList.toArray();
+    }
+    public Object[] getFoodKeySet(){
+        return foods.keySet().toArray();
     }
 }

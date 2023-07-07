@@ -33,7 +33,7 @@ public class Friend {
         if (eaten.isEmpty()) {
             return "nothing";
         }
-        return getFoods().toString();
+        return eaten.toString();
     }
     // now calling toString on a list of friend objects returns a list of friend names
     @Override
