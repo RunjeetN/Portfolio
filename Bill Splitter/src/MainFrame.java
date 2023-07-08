@@ -3,7 +3,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 import java.util.List;
 
 public class MainFrame extends JFrame {
@@ -16,7 +15,7 @@ public class MainFrame extends JFrame {
     private JList foodList;
     private JFormattedTextField costField;
     private JButton nextBtn;
-    private JPanel secondPanel;
+    private JPanel summaryPanel;
     private JTable table;
     private JLabel title;
     private JScrollPane f;
@@ -74,18 +73,6 @@ public class MainFrame extends JFrame {
                     people.setListData(app.getFriends());
                     foods.setListData(app.getFoodKeySet());
                 }
-
-                // SETTING UP TABLE
-                /*String[][] data = new String[app.getFriends().length][3];
-                String[] header = {"Name", "$$$", "Ate:"};
-                int count = 0;
-                for(Friend f: app.getFriendObjects()){
-                    data[count][0] = f.getName();
-                    data[count][1] = Double.toString(f.getDebt());
-                    data[count][2] = f.getFoods().toString();
-                    count++;
-                }
-                table = new JTable(data, header); */
             }
 
         });
@@ -136,7 +123,18 @@ public class MainFrame extends JFrame {
         toSummaryBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                startup(summaryPanel);
+                // SETTING UP TABLE
+                String[][] data = new String[app.getFriends().length][3];
+                String[] header = {"Name", "$$$", "Ate:"};
+                int count = 0;
+                for(Friend f: app.getFriendObjects()){
+                    data[count][0] = f.getName();
+                    data[count][1] = Double.toString(f.getDebt());
+                    data[count][2] = f.getFoods().toString();
+                    count++;
+                }
+                table = new JTable(data, header);
             }
         });
     }
