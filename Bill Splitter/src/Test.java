@@ -1,23 +1,62 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
-        int[][] img = {{1,2,4,3},{5,7,6,8},{3,2,1,4},{2,2,1,0}};
-        rotate(img);
+        int[] lst = {1, 3, 5, 4, 3};
+        Node n = new Node(0);
+        n = n.makeList(lst);
+        System.out.println(n.getString(n));
+        n = n.removeDupes(n);
+        System.out.println(n.getString(n));
     }
+    public static class Node {
+        Node rest;
+        int first;
 
-    public static void rotate(int[][] image) {
-        int N = image.length;
-        int[][] newImage = new int[N][N];
+        public Node(int num){
+            first = num;
+            rest = null;
+        }
 
-        for (int i = N - 1; i >= 0; i--) {
-            for(int k = 0; k < N; k++){
-                newImage[(i - N + 1) * -1][k] = image[k][i];
+        public Node removeDupes(Node lst){
+            if(lst == null || lst.rest == null){
+                return lst;
             }
+            List<Integer> uniqueNums = new ArrayList<>();
+            Node item = lst;
+            while(item != null){
+                if(!uniqueNums.contains(item.first)){
+                    uniqueNums.add(item.first);
+                    item = item.rest;
+                }
+                else{
+                    if(item.rest == null){
+                        return lst;
+                    }
+                    item.rest = item.rest.rest;
+                }
+            }
+            return lst;
         }
-        for(int i = 0; i < N; i++){
-            System.out.println(Arrays.toString(newImage[i]));
+        public Node makeList(int[] lst){
+            Node n = new Node(lst[0]);
+            Node first = n;
+            for(int i = 1; i < lst.length; i++){
+                n.rest = new Node(lst[i]);
+                n = n.rest;
+            }
+            return first;
         }
-
+        public String getString(Node n){
+            String s = "";
+            while(n != null){
+                s += n.first + ", ";
+                n = n.rest;
+            }
+            return s;
+        }
     }
+
 }

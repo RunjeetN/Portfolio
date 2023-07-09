@@ -15,12 +15,20 @@ public class Friend {
     }
     public void addDebt(double amount) {debt += amount;}
     public void payDebt(int amount) {debt -= amount;}
-    public double getDebt() {return debt;}
+    public double getDebt() {
+        debt = 0;
+        for(Food f: eaten){
+            debt += f.getPrice() / f.getN();
+        }
+        return debt;
+    }
     public String getName() {return name;}
     public void markOff() {paid = true;}
     public void addFood(Food f){
         if(!eaten.contains(f)){
             eaten.add(f);
+            f.increment();
+
         }
     }
     public void removeFood(Food f){
@@ -39,6 +47,13 @@ public class Friend {
     @Override
     public String toString(){
         return name;
+    }
+    public List<String> whatTheyAte(){
+        List<String> lst = new ArrayList<>();
+        for(Food f: eaten){
+            lst.add(f.getName());
+        }
+        return lst;
     }
     // now calling .contains(some_name) on a list of friend objects checks if any of the objects have some_name as their names
     @Override

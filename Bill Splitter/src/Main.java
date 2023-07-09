@@ -57,12 +57,14 @@ public class Main {
         }
     }
 
-    public static void print() {
+    public static List<String> print() {
         // print the names of all friends who owe money, how much they owe, and what they've eaten
+        List<String> receipt = new ArrayList<>();
         for (String name : friends.keySet()) {
             Friend f = friends.get(name);
-            System.out.println(name + " ate " + f.printFoods() + " and owes $" + f.getDebt());
+            receipt.add(name + " ate " + f.whatTheyAte() + " and owes $" + f.getDebt());
         }
+        return receipt;
     }
     public String friendsToString(){
         return friends.toString();

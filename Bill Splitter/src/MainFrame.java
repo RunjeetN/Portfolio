@@ -16,14 +16,14 @@ public class MainFrame extends JFrame {
     private JFormattedTextField costField;
     private JButton nextBtn;
     private JPanel summaryPanel;
-    private JTable table;
     private JLabel title;
-    private JScrollPane f;
     private JList people;
     private JList foods;
     private JPanel matchingPanel;
     private JButton toSummaryBtn;
     private JButton assignBtn;
+    private JScrollPane f;
+    private JList summaryList;
 
     private Main app = new Main();
 
@@ -124,17 +124,8 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 startup(summaryPanel);
-                // SETTING UP TABLE
-                String[][] data = new String[app.getFriends().length][3];
-                String[] header = {"Name", "$$$", "Ate:"};
-                int count = 0;
-                for(Friend f: app.getFriendObjects()){
-                    data[count][0] = f.getName();
-                    data[count][1] = Double.toString(f.getDebt());
-                    data[count][2] = f.getFoods().toString();
-                    count++;
-                }
-                table = new JTable(data, header);
+
+                summaryList.setListData(app.print().toArray());
             }
         });
     }
